@@ -8,6 +8,7 @@ import {
   Image,
   FlatList,
 } from 'react-native';
+import Header from './Header';
 import { icons, COLORS, SIZES, FONTS, images } from '../constants';
 
 const Home = ({ navigation }) => {
@@ -82,7 +83,7 @@ const Home = ({ navigation }) => {
   const restaurantData = [
     {
       id: 1,
-      name: 'ByProgrammers Burger',
+      name: 'Burger',
       rating: 4.8,
       categories: [5, 7],
       priceRating: affordable,
@@ -125,7 +126,7 @@ const Home = ({ navigation }) => {
     },
     {
       id: 2,
-      name: 'ByProgrammers Pizza',
+      name: 'Pizza',
       rating: 4.8,
       categories: [2, 4, 6],
       priceRating: expensive,
@@ -177,7 +178,7 @@ const Home = ({ navigation }) => {
     },
     {
       id: 3,
-      name: 'ByProgrammers Hotdogs',
+      name: 'Hotdogs',
       rating: 4.8,
       categories: [3],
       priceRating: expensive,
@@ -204,7 +205,7 @@ const Home = ({ navigation }) => {
     },
     {
       id: 4,
-      name: 'ByProgrammers Sushi',
+      name: 'Sushi',
       rating: 4.8,
       categories: [8],
       priceRating: expensive,
@@ -231,7 +232,7 @@ const Home = ({ navigation }) => {
     },
     {
       id: 5,
-      name: 'ByProgrammers Cuisine',
+      name: 'Cuisine',
       rating: 4.8,
       categories: [1, 2],
       priceRating: affordable,
@@ -282,7 +283,7 @@ const Home = ({ navigation }) => {
     },
     {
       id: 6,
-      name: 'ByProgrammers Dessets',
+      name: 'Dessets',
       rating: 4.9,
       categories: [9, 10],
       priceRating: affordable,
@@ -344,76 +345,44 @@ const Home = ({ navigation }) => {
   }
 
   function getCategoryNameById(id) {
-    let category = categories.filter(a => a.id == id);
+    let category = categories.filter(a => a.id === id);
 
-    if (category.length > 0) return category[0].name;
+    if (category.length > 0) {
+      return category[0].name;
+    }
 
     return '';
-  }
-
-  function renderHeader() {
-    return (
-      <View style={styles.headerContainer}>
-        <TouchableOpacity
-          style={[styles.headerInner, { paddingLeft: SIZES.padding * 2 }]}>
-          <Image
-            style={styles.headerImage}
-            source={icons.nearby}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
-        <View style={styles.headerLocation}>
-          <View style={styles.headerLocationLabel}>
-            <Text style={{ ...FONTS.h3 }}>Location</Text>
-          </View>
-        </View>
-        <TouchableOpacity
-          style={[styles.headerInner, { paddingRight: SIZES.padding * 2 }]}>
-          <Image
-            style={styles.headerImage}
-            source={icons.basket}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
-      </View>
-    );
   }
 
   function renderMainCategories() {
     const renderItem = ({ item }) => {
       return (
         <TouchableOpacity
-          style={{
-            padding: SIZES.padding,
-            paddingBottom: SIZES.padding * 2,
-            backgroundColor:
-              selectedCategory?.id == item.id ? COLORS.primary : COLORS.white,
-            borderRadius: SIZES.radius,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginRight: SIZES.padding,
-            ...styles.shadow,
-          }}
+          style={[
+            styles.categoryContainer,
+            {
+              backgroundColor:
+                selectedCategory?.id === item.id
+                  ? COLORS.primary
+                  : COLORS.white,
+              ...styles.shadow,
+            },
+          ]}
           onPress={() => onSelectCategory(item)}>
           <View
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: 25,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor:
-                selectedCategory?.id == item.id
-                  ? COLORS.white
-                  : COLORS.lightGray,
-            }}>
+            style={[
+              styles.categoryItem,
+              {
+                backgroundColor:
+                  selectedCategory?.id === item.id
+                    ? COLORS.white
+                    : COLORS.lightGray,
+              },
+            ]}>
             <Image
               source={item.icon}
               resizeMode="contain"
-              style={{
-                width: 30,
-                height: 30,
-              }}
+              style={styles.headerImage}
             />
           </View>
 
@@ -421,7 +390,7 @@ const Home = ({ navigation }) => {
             style={{
               marginTop: SIZES.padding,
               color:
-                selectedCategory?.id == item.id ? COLORS.white : COLORS.black,
+                selectedCategory?.id === item.id ? COLORS.white : COLORS.black,
               ...FONTS.body5,
             }}>
             {item.name}
@@ -450,86 +419,39 @@ const Home = ({ navigation }) => {
   function renderRestaurantList() {
     const renderItem = ({ item }) => (
       <TouchableOpacity
-        style={{ marginBottom: SIZES.padding * 2 }}
+        style={{ marginBottom: SIZES.padding * 4 }}
         onPress={() =>
           navigation.navigate('Restaurant', {
             item,
             currentLocation,
           })
         }>
-        {/* Image */}
-        <View
-          style={{
-            marginBottom: SIZES.padding,
-          }}>
+        <View style={{ marginBottom: SIZES.padding }}>
           <Image
             source={item.photo}
             resizeMode="cover"
-            style={{
-              width: '100%',
-              height: 200,
-              borderRadius: SIZES.radius,
-            }}
+            style={styles.restaurantImage}
           />
 
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              height: 50,
-              width: SIZES.width * 0.3,
-              backgroundColor: COLORS.white,
-              borderTopRightRadius: SIZES.radius,
-              borderBottomLeftRadius: SIZES.radius,
-              alignItems: 'center',
-              justifyContent: 'center',
-              ...styles.shadow,
-            }}>
+          <View style={[styles.restaurantDuration, styles.shadow]}>
             <Text style={{ ...FONTS.h4 }}>{item.duration}</Text>
           </View>
         </View>
 
-        {/* Restaurant Info */}
         <Text style={{ ...FONTS.body2 }}>{item.name}</Text>
 
-        <View
-          style={{
-            marginTop: SIZES.padding,
-            flexDirection: 'row',
-          }}>
-          {/* Rating */}
-          <Image
-            source={icons.star}
-            style={{
-              height: 20,
-              width: 20,
-              tintColor: COLORS.primary,
-              marginRight: 10,
-            }}
-          />
+        <View style={styles.restaurantInfo}>
+          <Image source={icons.star} style={styles.restaurantRatingIcon} />
           <Text style={{ ...FONTS.body3 }}>{item.rating}</Text>
-
-          {/* Categories */}
-          <View
-            style={{
-              flexDirection: 'row',
-              marginLeft: 10,
-            }}>
-            {item.categories.map(categoryId => {
-              return (
-                <View style={{ flexDirection: 'row' }} key={categoryId}>
-                  <Text style={{ ...FONTS.body3 }}>
-                    {getCategoryNameById(categoryId)}
-                  </Text>
-                  <Text style={{ ...FONTS.h3, color: COLORS.darkgray }}>
-                    {' '}
-                    .{' '}
-                  </Text>
-                </View>
-              );
-            })}
-
-            {/* Price */}
+          <View style={styles.restaurantCategory}>
+            {item.categories.map(categoryId => (
+              <View style={styles.restaurantCategoryLabel} key={categoryId}>
+                <Text style={{ ...FONTS.body3 }}>
+                  {getCategoryNameById(categoryId)}
+                </Text>
+                <Text style={{ ...FONTS.h3, color: COLORS.darkgray }}> . </Text>
+              </View>
+            ))}
             {[1, 2, 3].map(priceRating => (
               <Text
                 key={priceRating}
@@ -553,17 +475,18 @@ const Home = ({ navigation }) => {
         data={restaurants}
         keyExtractor={item => `${item.id}`}
         renderItem={renderItem}
-        contentContainerStyle={{
-          paddingHorizontal: SIZES.padding * 2,
-          paddingBottom: 30,
-        }}
+        contentContainerStyle={styles.restaurantContainer}
       />
     );
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      {renderHeader()}
+      <Header
+        iconLeft={icons.nearby}
+        iconRight={icons.basket}
+        title="Location"
+      />
       {renderMainCategories()}
       {renderRestaurantList()}
     </SafeAreaView>
@@ -609,6 +532,58 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: SIZES.radius,
+  },
+  categoryContainer: {
+    padding: SIZES.padding,
+    paddingBottom: SIZES.padding * 2,
+    borderRadius: SIZES.radius,
+    marginRight: SIZES.padding,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  categoryItem: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  restaurantContainer: {
+    paddingHorizontal: SIZES.padding * 2,
+    paddingBottom: 30,
+  },
+  restaurantImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: SIZES.radius,
+  },
+  restaurantDuration: {
+    position: 'absolute',
+    bottom: 0,
+    height: 50,
+    width: SIZES.width * 0.3,
+    backgroundColor: COLORS.white,
+    borderTopRightRadius: SIZES.radius,
+    borderBottomLeftRadius: SIZES.radius,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  restaurantInfo: {
+    marginTop: SIZES.padding,
+    flexDirection: 'row',
+  },
+  restaurantRatingIcon: {
+    width: 20,
+    height: 20,
+    tintColor: COLORS.primary,
+    marginRight: 10,
+  },
+  restaurantCategory: {
+    flexDirection: 'row',
+    marginLeft: 10,
+  },
+  restaurantCategoryLabel: {
+    flexDirection: 'row',
   },
 });
 

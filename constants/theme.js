@@ -23,8 +23,10 @@ export const SIZES = {
   base: 8,
   font: 14,
   radius: 30,
+  radius2: 40,
   padding: 10,
   padding2: 12,
+  margin: 10,
 
   // font sizes
   largeTitle: 50,
@@ -54,27 +56,27 @@ export const FONTS = {
   h3: { fontFamily: 'Roboto-Bold', fontSize: SIZES.h3, lineHeight: 22 },
   h4: { fontFamily: 'Roboto-Bold', fontSize: SIZES.h4, lineHeight: 22 },
   body1: {
-    // fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Regular',
     fontSize: SIZES.body1,
     lineHeight: 36,
   },
   body2: {
-    // fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Regular',
     fontSize: SIZES.body2,
     lineHeight: 30,
   },
   body3: {
-    // fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Regular',
     fontSize: SIZES.body3,
     lineHeight: 22,
   },
   body4: {
-    // fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Regular',
     fontSize: SIZES.body4,
     lineHeight: 22,
   },
   body5: {
-    // fontFamily: 'Roboto-Regular',
+    fontFamily: 'Roboto-Regular',
     fontSize: SIZES.body5,
     lineHeight: 22,
   },
